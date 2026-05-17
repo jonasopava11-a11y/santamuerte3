@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa Muerte - Digitální Svatyně</title>
+    <style>
+        /* SVATYNĚ HŘEJIVÉHO SVĚTLA S DOTYKEM DÍA DE LOS MUERTOS */
+        
+        :root {
+            --bg-deep: #1a0f0a;
+            --bg-panel: rgba(43, 20, 10, 0.8);
+            --gold-accent: #f5a623;
+            --gold-glow: rgba(245, 166, 35, 0.4);
+            --text-main: #e6d5c3;
+            --text-light: #fff3e0;
+            --accent-pink: #d81b60;
+            --accent-purple: #8e24aa;
+            --font-heading: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(245, 166, 35, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(216, 27, 96, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            border-top: 5px solid var(--accent-pink);
+        }
+
+        .papel-picado {
+            height: 15px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--gold-accent) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%);
+            mask-image: radial-gradient(circle at 10px 0, transparent 10px, black 11px);
+            mask-size: 20px 20px;
+            mask-repeat: repeat-x;
+            -webkit-mask-image: radial-gradient(circle at 10px 0, transparent 10px, black 11px);
+            -webkit-mask-size: 20px 20px;
+            -webkit-mask-repeat: repeat-x;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            position: relative;
+        }
+
+        header::before, header::after {
+            content: '✿';
+            position: absolute;
+            top: 60px;
+            font-size: 2.5rem;
+            color: var(--gold-accent);
+            opacity: 0.2;
+        }
+        header::before { left: 15%; }
+        header::after { right: 15%; }
+
+        .logo-container {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 3.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 0 0 10px 0;
+            font-weight: normal;
+            text-shadow: 0 0 20px var(--gold-glow), 2px 2px 0px rgba(0,0,0,0.8);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: normal;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .ticker {
+            background: rgba(216, 27, 96, 0.1);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            border-top: 1px dashed var(--accent-pink);
+            border-bottom: 1px dashed var(--accent-pink);
+            font-weight: normal;
+        }
+
+        .altar-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .altar-shrine {
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(60, 30, 15, 0.9) 0%, rgba(20, 10, 5, 0.95) 100%);
+            border: 2px solid var(--gold-accent);
+            border-radius: 12px 12px 0 0;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(245, 166, 35, 0.1);
+            position: relative;
+        }
+        
+        .altar-shrine::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: -10px;
+            right: -10px;
+            height: 15px;
+            background: linear-gradient(to bottom, #3e2723, #1a0f0a);
+            border-radius: 0 0 8px 8px;
+            border: 1px solid #5d4037;
+            border-top: none;
+        }
+
+        .altar-title {
+            font-family: var(--font-heading);
+            color: var(--gold-accent);
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-top: 0;
+            font-weight: normal;
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .candles-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin: 40px 0;
+        }
+
+        .candle-box {
+            width: 110px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s ease;
+        }
+
+        .candle-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .candle {
+            width: 28px;
+            height: 65px;
+            margin: 0 auto 15px auto;
+            position: relative;
+            border-radius: 3px 3px 1px 1px;
+            box-shadow: inset -3px 0 6px rgba(0,0,0,0.4), inset 2px 0 5px rgba(255,255,255,0.3), 0 5px 5px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+
+        .candle.bila { background: #fdfbf7; }
+        .candle.cerna { background: #1a1a1a; border: 1px solid #333; }
+        .candle.cervena { background: #9b111e; }
+        .candle.zlata { background: #d4af37; }
+
+        .flame {
+            width: 14px;
+            height: 26px;
+            background: radial-gradient(ellipse at bottom, #ffffff 0%, #ffcc00 40%, #ff3300 80%, transparent 100%);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -28px;
+            left: 7px;
+            animation: warm-flicker 0.15s infinite alternate;
+            display: none;
+            filter: drop-shadow(0 0 15px #ff9900);
+        }
+
+        .candle-box.active .flame {
+            display: block;
+        }
+
+        .candle-box.active .candle::before {
+            content: '';
+            position: absolute;
+            top: -40px; left: -40px; right: -40px; bottom: -40px;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.2) 0%, transparent 70%);
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        @keyframes warm-flicker {
+            0% { transform: scale(0.95) rotate(-1deg); filter: drop-shadow(0 0 10px #ff6600); opacity: 0.9; }
+            100% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 20px #ffcc00); opacity: 1; }
+        }
+
+        .candle-label {
+            font-size: 0.8rem;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a1887f;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .candle-box.active .candle-label {
+            color: var(--text-light);
+            text-shadow: 0 0 8px var(--gold-accent);
+        }
+
+        .altar-instruction {
+            color: #d7ccc8;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            font-family: var(--font-heading);
+            font-style: italic;
+        }
+
+        /* Tlačítka pro obětiny a akce */
+        .offering-btn {
+            background: rgba(62, 39, 35, 0.8);
+            color: var(--gold-accent);
+            border: 1px solid rgba(245, 166, 35, 0.4);
+            padding: 8px 18px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .offering-btn:hover {
+            background: var(--gold-accent);
+            color: #1a0f0a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 166, 35, 0.2);
+        }
+
+        .nav-matrix {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 8px;
+            margin-bottom: 40px;
+        }
+
+        .nav-matrix td {
+            background: rgba(62, 39, 35, 0.6);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            border-radius: 6px;
+            text-align: center;
+            padding: 15px 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-matrix a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .nav-matrix td:hover {
+            background: rgba(245, 166, 35, 0.15);
+            border-color: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        .nav-matrix td:hover a {
+            color: var(--text-light);
+            text-shadow: 0 0 5px var(--gold-accent);
+        }
+
+        .main-content {
+            padding: 0;
+        }
+
+        .prayer-card {
+            background: var(--bg-panel);
+            border: 1px solid rgba(245, 166, 35, 0.15);
+            border-left: 4px solid var(--gold-accent);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .prayer-card::before {
+            content: "❀"; 
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: var(--gold-accent);
+            opacity: 0.15;
+        }
+
+        .prayer-card.highlighted {
+            background: rgba(62, 39, 35, 0.85);
+            border-color: var(--gold-accent);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 20px rgba(245, 166, 35, 0.05);
+        }
+
+        .prayer-title {
+            font-family: var(--font-heading);
+            color: var(--gold-accent);
+            font-size: 1.7rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(245, 166, 35, 0.3);
+            padding-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .prayer-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            white-space: pre-line;
+        }
+
+        .prayer-text ul, .prayer-text ol {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .prayer-text li {
+            margin-bottom: 8px;
+        }
+
+        /* Schránka textarea */
+        .letter-textarea {
+            width: 100%;
+            height: 180px;
+            background: rgba(26, 15, 10, 0.8);
+            border: 1px solid rgba(245, 166, 35, 0.4);
+            color: var(--text-light);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            resize: none;
+            margin-bottom: 20px;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.6);
+        }
+        .letter-textarea:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 15px rgba(245, 166, 35, 0.3), inset 0 5px 15px rgba(0,0,0,0.6);
+        }
+
+        [style*="font-family: Impact"] {
+            font-family: var(--font-heading) !important;
+            color: var(--gold-accent) !important;
+            letter-spacing: 2px !important;
+            font-weight: normal !important;
+            text-shadow: none !important;
+            font-size: 1.3rem !important;
+        }
+        
+        [style*="color: #ffcc00"], [style*="color: #ff9900"] {
+            color: var(--gold-accent) !important;
+            font-family: var(--font-body) !important;
+            text-shadow: none !important;
+        }
+        
+        [style*="color: #00ffcc"] {
+            color: var(--accent-pink) !important;
+            font-family: var(--font-body) !important;
+            text-shadow: none !important;
+        }
+
+        [style*="color: #ff3300"] {
+            color: #d84315 !important;
+            text-shadow: none !important;
+            font-family: var(--font-heading) !important;
+            font-size: 1.4rem !important;
+            font-weight: normal !important;
+        }
+
+        .prayer-text strong {
+            text-shadow: none !important;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .prayer-text strong[style*="color: #ff3333"] { color: #e53935 !important; }
+        .prayer-text strong[style*="color: #ffffff"] { color: #ffffff !important; }
+        .prayer-text strong[style*="color: #ffd700"] { color: #fbc02d !important; }
+        .prayer-text strong[style*="color: #666666"] { color: #b0bec5 !important; }
+        .prayer-text strong[style*="color: #33ff33"] { color: #43a047 !important; }
+        .prayer-text strong[style*="color: #cc66ff"] { color: #ab47bc !important; }
+        .prayer-text strong[style*="color: #d28c47"] { color: #fb8c00 !important; }
+
+        .divider {
+            text-align: center;
+            margin: 50px 0;
+            color: rgba(245, 166, 35, 0.4);
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+        }
+        
+        .divider::before {
+            content: "✿ 🕯️ ✿";
+        }
+
+        .shrine-info-box {
+            background: rgba(142, 36, 170, 0.05); 
+            border: 1px solid rgba(142, 36, 170, 0.3);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: center;
+            color: var(--text-main);
+        }
+
+        .shrine-info-box h3 {
+            margin-top: 0;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            font-family: var(--font-heading);
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+        
+        .gallery-box {
+            background: rgba(30, 15, 10, 0.6);
+            border: 1px solid rgba(245, 166, 35, 0.1);
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .gallery-box h2 {
+            font-family: var(--font-heading);
+            color: var(--gold-accent);
+            font-size: 1.6rem;
+            margin-top: 0;
+            text-shadow: none;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .gallery-box p[style] {
+            color: #a1887f !important;
+            font-family: var(--font-body) !important;
+        }
+
+        .gallery-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gallery-grid img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid rgba(142, 36, 170, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-grid.mobile-wallpapers img {
+            width: 130px;
+            height: 260px; 
+            border-color: rgba(216, 27, 96, 0.2);
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            border-color: var(--gold-accent);
+            box-shadow: 0 8px 20px rgba(245, 166, 35, 0.2);
+        }
+
+        footer {
+            background: #0d0805;
+            border-top: 2px solid #3e2723;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #795548;
+            margin-bottom: 50px;
+        }
+
+        .counter-box {
+            background: #1a0f0a;
+            color: var(--gold-accent);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 5px 15px;
+            border: 1px solid #4e342e;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(43, 20, 10, 0.95);
+            border-top: 2px solid var(--gold-accent);
+            color: var(--text-light);
+            padding: 15px 20px;
+            text-align: center;
+            z-index: 9999;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .cookie-text {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .cookie-buttons button {
+            background: #3e2723;
+            color: var(--text-light);
+            border: 1px solid var(--gold-accent);
+            border-radius: 4px;
+            padding: 8px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .cookie-buttons button:hover {
+            background: var(--gold-accent);
+            color: #1a0f0a;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; letter-spacing: 5px; }
+            .subtitle { font-size: 0.9rem; letter-spacing: 2px; }
+            .altar-shrine, .prayer-card { padding: 25px 20px; }
+            .nav-matrix td {
+                display: block;
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            .cookie-buttons button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+        
+        @keyframes pulse-glow {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="papel-picado"></div>
+
+    <header>
+        <div class="logo-container">
+            <h1>Santa Muerte</h1>
+            <div class="subtitle">Moudrá, Čistotná a Milující Matka — Digitální Oltář a Svatyně</div>
+        </div>
+    </header>
+
+    <div class="ticker">
+        <marquee scrollamount="4">Vítejte v posvátném prostoru zasvěceném Santa Muerte. Zapalte svíčku na našem digitálním oltáři a spočiňte v její tiché a milující přítomnosti. Spravedlnost, ochrana a mír pro všechny čisté duše. Nechť vás její plášť halí na všech vašich cestách.</marquee>
+    </div>
+
+    <div class="altar-container">
+        
+        <div class="altar-shrine">
+            <div class="altar-title">🕯️ INTERAKTIVNÍ DIGITÁLNÍ OLTÁŘ 🕯️</div>
+            <p style="margin: 5px 0 15px 0; color: #ffcc00; font-family: Arial, sans-serif;">Kliknutím na svíčky je můžete symbolicky zapálit a aktivovat jejich duchovní záři na tomto oltáři.</p>
+            
+            <div class="candles-row">
+                <div class="candle-box active" onclick="toggleCandle(this)">
+                    <div class="candle bila"><div class="flame"></div></div>
+                    <div class="candle-label">Bílá Paní<br>(Zdraví & Mír)</div>
+                </div>
+                <div class="candle-box" onclick="toggleCandle(this)">
+                    <div class="candle cerna"><div class="flame"></div></div>
+                    <div class="candle-label">Černá Matka<br>(Absolutní Ochrana)</div>
+                </div>
+                <div class="candle-box" onclick="toggleCandle(this)">
+                    <div class="candle cervena"><div class="flame"></div></div>
+                    <div class="candle-label">Červená Podoba<br>(Láska & Rodina)</div>
+                </div>
+                <div class="candle-box" onclick="toggleCandle(this)">
+                    <div class="candle zlata"><div class="flame"></div></div>
+                    <div class="candle-label">Zlatá Prosperita<br>(Hojnost & Finance)</div>
+                </div>
+            </div>
+            
+            <div id="offerings-zone" style="min-height: 40px; margin-top: 20px; font-size: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;"></div>
+            
+            <div class="altar-instruction" id="altar-status">Bílá svíčka plane pro vaše zdraví a klidnou mysl.</div>
+            
+            <div style="margin-top: 25px; border-top: 1px dashed rgba(245,166,35,0.3); padding-top: 20px;">
+                <p style="color: #a1887f; font-size: 0.9rem; font-style: italic; margin-bottom: 10px;">Položit obětinu na oltář (Ofrendas):</p>
+                <button class="offering-btn" onclick="addOffering('🥃')">Tequila</button>
+                <button class="offering-btn" onclick="addOffering('🍞')">Chléb</button>
+                <button class="offering-btn" onclick="addOffering('✿')">Měsíček</button>
+                <button class="offering-btn" onclick="addOffering('🚬')">Tabák</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; color: #ff9900; font-family: Impact, sans-serif; font-size: 1.5rem; margin-bottom: 10px;">📖 ROZCESTNÍK MODLITEB 📖</div>
+        <table class="nav-matrix">
+            <tr>
+                <td><a href="#ranni">Ranní modlitba</a></td>
+                <td><a href="#dopoledni">Dopolední modlitba</a></td>
+                <td><a href="#poledni">Polední modlitba</a></td>
+                <td><a href="#odpoledni">Odpolední modlitba</a></td>
+            </tr>
+            <tr>
+                <td><a href="#vecerni">Večerní modlitba</a></td>
+                <td><a href="#ochrana">Modlitba za ochranu</a></td>
+                <td><a href="#zdravi">Modlitba za zdraví</a></td>
+                <td><a href="#skola">Modlitba za úspěch ve škole</a></td>
+            </tr>
+            <tr>
+                <td><a href="#cesty">Na cestách</a></td>
+                <td><a href="#mysl">Klidná mysl & Úzkost</a></td>
+                <td><a href="#laska">Láska & Rodinné štěstí</a></td>
+                <td><a href="#hojnost">Hojnost & Finance</a></td>
+            </tr>
+            <tr>
+                <td><a href="#oslavna">Oslavná modlitba</a></td>
+                <td><a href="#domov">Očista domova</a></td>
+                <td><a href="#pondeli">Pondělní / Nový týden</a></td>
+                <td><a href="#odchod">Klidný odchod duše</a></td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="#pokora">Za pokoru a přijetí</a></td>
+                <td colspan="2"><a href="#predkove">Za duše předků a zemřelých</a></td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="#oddane">Modlitba pro oddané</a></td>
+                <td colspan="2"><a href="#vdecnost" style="color: #00ffcc;">Modlitba čisté vděčnosti</a></td>
+            </tr>
+        </table>
+
+        <div class="shrine-info-box">
+            <h3>Povaha naší Svatyně</h3>
+            Santa Muerte je milující, moudrá a hluboce spravedlivá ochránkyně. Nedělá rozdíly mezi lidmi, neodsuzuje a její náruč je otevřená pro každého, kdo přichází s upřímností a čistým srdcem. Tento digitální oltář slouží jako bezpečné útočiště pro vaši každodenní rozmluvu s Nejsvětější Smrtí.
+        </div>
+
+        <div class="main-content">
+
+            <div class="prayer-card highlighted">
+                <div class="prayer-title">Kdo je Santa Muerte?</div>
+                <div class="prayer-text">
+                    Santa Muerte, v překladu „Svatá Smrt“, je lidová svatá, kterou uctívají miliony lidí, především v Mexiku a USA. Na rozdíl od tradičních svatých ji katolická církev neuznává. Pro své věrné má podobu kostlivce v dlouhém rouchu, často s kosou v ruce.<br>
+                    I když její vzhled může na první pohled působit strašidelně, lidé se jí nebojí. Naopak v ní vidí ochránkyni.
+                    <br><br>
+                    <strong style="color: #ff9900;">Proč ji lidé uctívají?</strong><br>
+                    Hlavní důvod je jednoduchý: Smrt je spravedlivá a měří všem stejně. Santa Muerte nedělá rozdíly mezi bohatými a chudými, ani mezi vzornými občany a těmi, kteří žijí na okraji společnosti.<br>
+                    Lidé ji žádají o věci z běžného života:
+                    <ul>
+                        <li><strong>Ochrana:</strong> Chrání před násilím a nehodami.</li>
+                        <li><strong>Zdraví a láska:</strong> Pomáhá s nemocemi a vztahy.</li>
+                        <li><strong>Peníze:</strong> Prosí ji o práci a štěstí v podnikání.</li>
+                    </ul>
+                    Na její oltáře lidé nosí dary, jako jsou svíčky, květiny, ale i cigarety nebo alkohol. Santa Muerte nikoho nesoudí – přijímá každého, kdo ji o pomoc požádá s čistým srdcem.
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-title">Často kladené otázky (FAQ) o Santa Muerte</div>
+                <div class="prayer-text">
+                    <strong style="color: #00ffcc;">1. Je Santa Muerte to samé jako satanismus?</strong><br>
+                    <strong>Ne, vůbec ne.</strong> Uctívání Santa Muerte nemá s ďáblem ani satanismem nic společného. Většina jejích věřících se považuje za katolíky. Santa Muerte vnímají jako bytost stvořenou Bohem, která pouze plní svou práci – a tou je péče o lidské duše na konci života.<br><br>
+                    
+                    <strong style="color: #00ffcc;">2. Je bezpečné mít doma její sošku nebo oltář?</strong><br>
+                    <strong>Ano, pro její uctívače je to symbol ochrany.</strong> Lidé věří, že Santa Muerte domov chrání před nebezpečím, nemocemi a zlou energií. Strach z ní mají spíše ti, kteří ji neznají nebo její kult viděli zkreslený ve filmech a seriálech.<br><br>
+                    
+                    <strong style="color: #00ffcc;">3. Co se jí dává na oltář jako dar?</strong><br>
+                    Santa Muerte má ráda pestrost. Mezi nejčastější dary na oltářích patří:
+                    <ul>
+                        <li>Bílé nebo barevné <strong>svíčky</strong> (podle toho, o co ji prosíte).</li>
+                        <li>Čerstvé <strong>květiny</strong> (nejčastěji růže a měsíčky).</li>
+                        <li>Čistá <strong>voda</strong> (symbol života a energie).</li>
+                        <li><strong>Tradiční dary:</strong> Cigarety, doutníky, tequila, jídlo nebo sladkosti.</li>
+                    </ul>
+                    
+                    <strong style="color: #00ffcc;">4. Co znamenají různé barvy jejího roucha?</strong><br>
+                    Sošky Santa Muerte mívají různé barvy podle toho, s čím mají lidem pomoci:
+                    <ul>
+                        <li><strong>Bílá:</strong> Pro čistotu, mír, ochranu domova a očištění od negativity.</li>
+                        <li><strong>Červená:</strong> Pro lásku, vášeň, upevnění vztahů a rodinu.</li>
+                        <li><strong>Zlatá / Žlutá:</strong> Pro peníze, úspěch v práci, podnikání a hojnost.</li>
+                        <li><strong>Černá:</strong> Nejsilnější barva, která se používá pro absolutní ochranu před magií a nepřáteli.</li>
+                    </ul>
+                    
+                    <strong style="color: #00ffcc;">5. Proč ji uctívají lidé na okraji společnosti?</strong><br>
+                    Santa Muerte je známá tím, že <strong>nikoho nesoudí</strong>. Přijímá lidi takové, jací jsou. Proto k ní mají blízko ti, kteří se cítí odmítnuti společností nebo církví – například lidé z chudých poměrů, menšiny, ale i policisté, vězni nebo lidé pracující v nebezpečných profesích. Pro každého má stejné pochopení.
+                </div>
+            </div>
+
+            <div class="prayer-card highlighted">
+                <div class="prayer-title">Jak si postavit domácí oltář pro Santa Muerte: Průvodce krok za krokem</div>
+                <div class="prayer-text">
+                    Vytvoření domácího oltáře je tím nejdůležitějším krokem, pokud chcete navázat spojení se Santa Muerte. Oltář slouží jako posvátné místo, kde s ní můžete rozmlouvat, žádat ji o pomoc a projevovat jí úctu. Santa Muerte není náročná na luxus, ale potrpí si na čistotu, respekt a upřímný záměr.<br>
+                    Zde je jednoduchý návod, jak si její oltář postavit doma, i když s uctíváním teprve začínáte.<br><br>
+
+                    <strong style="color: #ff9900;">1. Výběr správného místa</strong><br>
+                    Prvním krokem je najít pro oltář vhodné místo. Mělo by to být spíše <strong>klidné a čisté místo</strong>, kde neprobíhá neustálý shon.
+                    <ul>
+                        <li><strong>Ideální místa:</strong> Roh obývacího pokoje, polička nebo vrchní část komody.</li>
+                        <li><strong>Čemu se vyhnout:</strong> Nikdy nestavte oltář na zem. Santa Muerte si zaslouží úctu a měla by být umístěna ve výšce (minimálně od pasu nahoru). Oltář by také neměl být v těsné blízkosti koše na odpadky nebo tam, kde se spí (pokud nemáte jinou možnost, můžete ho v ložnici na noc zakrýt lehkým šátkem).</li>
+                    </ul>
+                    Předtím, než na vybrané místo cokoli položíte, ho <strong>důkladně ukliďte a otřete od prachu</strong>. Čistota je pro Santa Muerte zásadní.<br><br>
+
+                    <strong style="color: #ff9900;">2. Srdce oltáře: Výběr sošky nebo obrazu</strong><br>
+                    Hlavním bodem celého oltáře je zobrazení Santa Muerte. Může to biti soška (ideálně z pryskyřice, dřeva nebo keramiky) nebo zarámovaný obraz či fotografie.<br>
+                    Při výběru sošky se řiďte <strong>barvou jejího roucha</strong> podle toho, co ve svém životě nejvíce potřebujete:
+                    <ul>
+                        <li><strong>Bílá:</strong> Nejlepší volba pro začátečníky. Přináší mír, čistotu, zdraví a celkovou ochranu domova.</li>
+                        <li><strong>Zlatá / Žlutá:</strong> Pokud potřebujete pomoci s penězi, prací, podnikáním nebo prosperitou.</li>
+                        <li><strong>Červená:</strong> Pro záležitosti srdce – lásku, vášeň a upevnění rodinných vztahů.</li>
+                        <li><strong>Černá:</strong> Pro silnou ochranu před nepřáteli, nebezpečím a negativní energií.</li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">3. Základní obětiny, které nesmí chybět</strong><br>
+                    Oltář by nikdy neměl zůstat prázdný. Santa Muerte miluje dary, kterými jí dáváte najevo, že na ni myslíte. Zde jsou čtyři věci, které tvoří základ každého oltáře:
+                    <ol>
+                        <li><strong>Sklenice s čistou vodou:</strong> Voda je symbolem života a energie. Musí být vždy čerstvá. Jakmile se v ní objeví bublinky, znamená to, že voda absorbuje negativní energii z okolí. Pravidelně ji měňte.</li>
+                        <li><strong>Svíčka:</strong> Svíčka představuje světlo a teplo, které Santa Muerte nabízíte. Měla by odpovídat barvě sošky (např. bílá svíčka k bílé sošce).</li>
+                        <li><strong>Květiny:</strong> Čerstvé květiny (nejčastěji bílé nebo červené růže či karafiáty) dělají Santa Muerte velkou radost. Jakmile začnou vadnout, poděkujte jim a vyměňte je.</li>
+                        <li><strong>Kousek chleba nebo sladkost:</strong> Jídlo symbolizuje, že v domě nikdy nebude hlad. Oblíbené jsou čokolády, bonbóny nebo tradiční sladké pečivo.</li>
+                    </ol>
+
+                    <strong style="color: #ff9900;">4. Tradiční dary pro potěšení</strong><br>
+                    Pokud chcete své pouto se Santa Muerte posílit, můžete na oltář přidat věci, které měla ráda v pozemském životě:
+                    <ul>
+                        <li><strong>Tabák:</strong> Zapálená cigareta nebo doutník, jehož kouřem můžete sošku jemně očistit.</li>
+                        <li><strong>Alkohol:</strong> Malá sklenka tequily, mezcalu nebo rumu.</li>
+                        <li><strong>Peníze:</strong> Pár mincí položených k jejím nohám, které přitáhnou finanční hojnost do domu.</li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">Jak oltář aktivovat?</strong><br>
+                    Když máte vše připravené, zapalte svíčku a vonnou tyčinku. Postavte se před oltář, zavřete oči a promluvte k Santa Muerte svými vlastními slovy. Přivítejte ji ve svém domově, poděkujte jí za její přítomnost a poproste ji o ochranu.<br><br>
+                    <span style="color: #00ffcc;"><em>Důležité pravidlo na závěr: Oltář udržujte stále v čistotě. Santa Muerte se o vás bude starat tak dobře, jak dobře se vy staráte o její oltář.</em></span>
+                </div>
+            </div>
+
+            <div class="prayer-card highlighted">
+                <div class="prayer-title">🕯️ Uspořádání velmi jednoduché domácí bohoslužby k Santa Muerte</div>
+                <div class="prayer-text">
+                    Domácí bohoslužba k Santa Muerte není o drahých rituálních předmětech, složitých latinských textech ani o okázalých gestech. Skutečný chrám se nachází ve tvém nitru. Santa Muerte je skromná, moudrá Matka – slyší čistý záměr, vidí upřímnou bolest i vděčnost a nejvíce si cení tvého času a pokory.
+                    <br><br>
+                    Pokud prožíváš těžké období, hledáš ochranu, nebo chceš pouze poděkovat za klidný den, můžeš si doma uspořádat tuto velmi jednoduchou, soukromou bohoslužbu.
+                    <br><br>
+                    <strong style="color: var(--gold-accent);">1. Příprava prostoru (Očista a zklidnění)</strong><br>
+                    Bílá Paní si potrpí na čistotu. Než začneš, ukliď místo, kde budeš bohoslužbu provádět (stačí čistý stůl, polička nebo noční stolek). Otři prach a vyvětrej. Fyzický úklid podvědomě uklidňuje mysl a připravuje tě na duchovní přechod.
+                    <ul>
+                        <li><strong>Vzduch:</strong> Pokud máš doma vonnou tyčinku (ideálně kopál, santalové dřevo nebo šalvěj), zapal ji. Pokud ne, nevadí.</li>
+                        <li><strong>Tělo:</strong> Před rituálem si opláchni obličej a ruce studenou vodou. Tím ze sebe symbolicky smyješ shon běžného dne.</li>
+                    </ul>
+                    
+                    <strong style="color: var(--gold-accent);">2. Svolání čtyř elementů (Srdce oltáře)</strong><br>
+                    Polož na stůl zobrazení Santa Muerte (sošku, vytištěný obrázek, nebo kartu). Pokud ji nemáš, stačí vizualizace v mysli. Kolem ní rozestav tyto čtyři prosté věci, které představují síly přírody:
+                    <ul>
+                        <li><strong>Oheň (Svíčka):</strong> Zapal jednu svíčku. Barvu zvol podle toho, co tě tíží (Bílá pro mír a zdraví, Černá pro ochranu, Červená pro rodinu, Zlatá/Žlutá pro finance). Pamatuj: Svíčku nikdy nesfoukávej ústy, uhas ji zhasínátkem nebo lžičkou.</li>
+                        <li><strong>Voda (Sklenice vody):</strong> Postav k oltáři sklenici čisté, čerstvé vody. Voda funguje jako duchovní magnet – stahuje na sebe těžkou energii z tebe i z místnosti.</li>
+                        <li><strong>Země (Něco sladkého):</strong> Polož k jejím nohám kousek čokolády, bonbón nebo kousek chleba. Je to symbol toho, že ve tvém domě nikdy nebude hlad a hořkost.</li>
+                        <li><strong>Vzduch (Dým):</strong> Zapálená vonná tyčinka nebo kouř z rituálního tabáku. Kouř nese tvá slova přímo vzhůru k její tváři.</li>
+                    </ul>
+                    
+                    <strong style="color: var(--gold-accent);">3. Vstup do ticha (Zklidnění tepu)</strong><br>
+                    Sedni si před oltář. Zavři oči. Nedělej nic. Pouze 2 až 3 minuty vnímej svůj dech. Sleduj, jak vzduch proudí dovnitř a ven. Dovol všem myšlenkám na práci, dluhy nebo hádky, aby odpluly. Předstupuješ před Smrt – před ní mizí všechen pozemský spěch. Jsi v bezpečí.
+                    <br><br>
+                    <strong style="color: var(--gold-accent);">4. Rozmluva a modlitba (Volání z hloubi srdce)</strong><br>
+                    Otevři oči, pohlédni do plamene svíčky a promluv k Santa Muerte.
+                    <ul>
+                        <li><strong>Nejprve poděkuj:</strong> Vždy začni vděčností. Poděkuj za chléb na stole, za střechu nad hlavou a za to, že jsi dožil/a dnešního dne.</li>
+                        <li><strong>Přednes své břemeno:</strong> Mluv k ní svými vlastními slovy, jako bys mluvil/a s tou nejvěrnější přítelkyní. Neklaď si podmínky, nelži. Řekni jí, co tě bolí, z čeho máš strach a s čím si nevíš rady. Pokud se ti chce plakat, plač – pláč očišťuje duši a Santa Muerte tvé slzy sbírá do svého pláště.</li>
+                        <li><strong>Přečti modlitbu:</strong> Nyní pomalu a soustředěně přečti modlitbu z rozcestníku, která odpovídá tvé situaci (např. Modlitbu za klidnou mysl nebo Modlitbu čisté vděčnosti).</li>
+                    </ul>
+                    
+                    <strong style="color: var(--gold-accent);">5. Odevzdání a uzavření rituálu</strong><br>
+                    Po dočtení modlitby na chvíli opět utichni. Představ si, že všechen ten strach a balvan, který jsi nosil/a v hrudi, jsi právě položil/a k jejím nohám. Už to není tvůj problém. Teď to nese ona.
+                    <br><br>
+                    S hlubokou úctou skloň hlavu a řekni: „Děkuji ti, má Santa Muerte. Do tvých rukou odevzdávám své starosti s vírou, že na nich již pracuješ. Sláva tobě.“
+                    <br><br>
+                    Svíčku můžeš nechat bezpečně dohořet, nebo ji uctivě uhasit (nefoukat!). Vodu zahoď druhý den ráno do odpadu (nepít!) a nahraď ji čerstvou. Sladkost po několika dnech odnes ven ke stromu jako poděkování přírodě.
+                    <br><br>
+                    Vrat' se do běžného života s narovnanými zády. Udělal/a jsi maximum. Zbytek zařídí její váhy a kosa.
+                </div>
+            </div>
+
+            <div class="shrine-info-box" style="border-color: var(--gold-accent);">
+                <h3 style="color: var(--gold-accent);">4. Zvuková rituální mísa (Zvuková kotva)</h3>
+                Zvuk má obrovskou schopnost měnit nastavení lidské mysli.<br><br>
+                <strong>Jak to funguje:</strong> Na konci každé dočtené modlitby nebo po odevzdání dopisu do schránky bude tlačítko s ikonou hliněné mísy nebo zvonu. Po kliknutí se ozve hluboký, čistý a velmi dlouho doznívající zvuk rituálního gongu.<br>
+                <strong>Psychologický efekt:</strong> V psychologii se tomu říká „zvuková kotva“. Tento tón dává mozku jasný signál, že rituál byl dokončen, břemeno bylo odevzdáno a uživatel může situaci pustit z hlavy. Doznívání zvuku navíc nutí člověka na chvíli ztichnout a naslouchat.
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-title" style="color: #ff3300;">Etiketa a varování: Co NIKDY nedělat při uctívání Santa Muerte</div>
+                <div class="prayer-text">
+                    Santa Muerte je známá svou hlubokou láskou, pochopením a ochotou pomoci každému, kdo ji o to požádá. Je to však nesmírně mocná duchovní bytost, která vyžaduje absolutní respekt. Práce s její energií má svá jasná pravidla.<br>
+                    Pokud s uctíváním Santa Muerte začínáte, vyhněte se těmto zásadním chybám, abyste nenarušili její přízeň.<br><br>
+
+                    <strong style="color: #ff9900;">1. Nikdy neslibujte to, co nemůžete splnit</strong><br>
+                    Tohle je <strong>nejdůležitější pravidlo</strong> celého kultu. Vztah se Santa Muerte funguje na principu vzájemné výměny. Když ji o něco prosíte, často jí na oplátku něco slíbíte (např. <em>„Když mi pomůžeš najít práci, koupím ti na oltář novou sošku / týden ti budu zapalovat svíčky / přestanu kouřit“</em>).
+                    <ul>
+                        <li><strong>Pravidlo:</strong> Pokud Santa Muerte vaši prosbu splní, musíte svůj slib dodržet co nejdříve.</li>
+                        <li><strong style="color: #ff3300;">Varování:</strong> Santa Muerte si pro svůj dluh umí dojít. Pokud na svůj slib zapomenete nebo ho vědomě ignorujete, vezme si svou odměnu zpět – a často i s úroky (můžete o získanou věc přijít, nebo vás potká smůla). <strong>Slíbíte-li málo, splňte málo. Neslibujte hory doly, pokud na to nemáte.</strong></li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">2. Nemíchejte její oltář s jinými svatými</strong><br>
+                    Santa Muerte je nesmírně žárlivá. Vyžaduje svůj vlastní, exkluzivní prostor.
+                    <ul>
+                        <li><strong>Pravidlo:</strong> Její oltář musí patřit <strong>pouze jí</strong>.</li>
+                        <li><strong style="color: #ff3300;">Varování:</strong> Nikdy nedávejte její sošku na stejný stůl nebo poličku s katolickými svatými, anděly, Buddhou nebo pohanskými božstvy. Jedinou výjimkou, kterou Santa Muerte na svém oltáři toleruje (a často přímo vyžaduje), je zobrazení <strong>Ježíše Krista nebo Boha Otce</strong>, protože uznává jejich vyšší autoritu.</li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">3. Nepřistupujte k ní ze strachu nebo pouhé zvědavosti</strong><br>
+                    Santa Muerte vidí lidem přímo do srdce. Pozná, s jakým záměrem k ní přicházíte.
+                    <ul>
+                        <li><strong>Pravidlo:</strong> Obracejte se na ni pouze tehdy, pokud k ní cítíte upřímný respekt nebo lásku.</li>
+                        <li><strong style="color: #ff3300;">Varování:</strong> Nikdy si nepořizujte její sošku jen „ze zvědavosti“, jako módní doplněk, nebo proto, že to vypadá rebelsky. Stejně tak k ní nepřistupujte ze strachu (např. <em>„Budu ji uctívat, aby mi neublížila“</em>). Pokud z ní máte strach, raději s ní vůbec nepracujte. Ona není zlá, ale strach její energii deformuje.</li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">4. Nikdy nezkoušejte její moc</strong><br>
+                    Někteří lidé mají tendenci duchovní bytosti „testovat“, zda opravdu fungují. U Santa Muerte se to nevyplácí.
+                    <ul>
+                        <li><strong>Pravidlo:</strong> Žádost o pomoc musí být myslena vážně a s pokorou.</li>
+                        <li><strong style="color: #ff3300;">Varování:</strong> Prosby typu <em>„Jestli opravdu existuješ, zařiď, ať zítra vyhraju v loterii“</em> jsou považovány za neúctu. Santa Muerte není plnitel fantastických přání ani cirkusová atrakce. Pomáhá v reálných a těžkých životních situacích.</li>
+                    </ul>
+
+                    <strong style="color: #ff9900;">5. Neužívejte její dary z oltáře</strong><br>
+                    Vše, co jednou položíte na její oltář, už patří jí. Jde o posvátnou oběť.
+                    <ul>
+                        <li><strong>Pravidlo:</strong> Jakmile dary splní svůj účel (květiny zvadnou, jídlo se začne kazit), s úctou je vyhoďte (ideálně odneste do přírody ke stromu) a poděkujte.</li>
+                        <li><strong style="color: #ff3300;">Varování:</strong> Nikdy nepijte alkohol, který jste jí nalili do sklenky, a nejezte čokoládu nebo ovoce z jejího oltáře. Pro člověka je toto jídlo a pití již „mrtvé“ – Santa Muerte z něj odčerpala duchovní energii.</li>
+                    </ul>
+                    <br>
+                    <span style="color: #00ffcc;"><em>Zlatá rada na závěr: Santa Muerte se k vám bude chovat přesně tak, jak se vy chováte k ní. Pokud k ní přistupujete s čistým srdcem, úctou a láskou, získáte tu nejsilnější a nejvěrnější ochránkyni na světě.</em></span>
+                </div>
+            </div>
+            
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card highlighted">
+                <div class="prayer-title">Životní rady od Santa Muerte</div>
+                <div class="prayer-text">
+                    <strong style="color: #ffcc00; font-size: 1.4rem;">⚖️ O spravedlnosti a rovnosti</strong>
+                    <ul>
+                        <li>Před mým zrakem jsou si všichni rovni. Neplýtvej časem tím, že se budeš nad někoho povyšovat nebo se před někým ponižovat. Bohatství, tituly i chudoba jsou jen šaty, které u mě v předsíni každý odloží.</li>
+                        <li>Nesuď ty, které společnost zavrhla. Já vidím do srdce každého a neodsuzuji nikoho podle jeho chyb. Nauč se dívat na lidi bez předsudků, protože neznáš váhu jejich břemene.</li>
+                        <li>Spravedlnost má svůj čas. Když ti někdo ublíží, nenech se pohltit touhou po pomstě. Moje váhy pracují neomylně. Soustřeď se na svůj život, já se postarám o zbytek.</li>
+                    </ul>
+
+                    <strong style="color: #ffcc00; font-size: 1.4rem;">⏳ O pomíjivosti a čase</strong>
+                    <ul>
+                        <li>Tvůj čas je ten nejcennější dar. Na tomto světě jsi jen na návštěvě. Neplýtvej svými dny v toxických vztazích, v nenávisti nebo v práci, která ti rve duši.</li>
+                        <li>Smrt není tvůj nepřítel, ale tvůj nejlepší poradce. Když nevíš, jak se rozhodnout, zeptej se sám sebe: „Záleželo by na tomhle v mé poslední hodině?“ To, co zbyde, je to jediné, na čem opravdu záleží.</li>
+                        <li>Nelpí na věcech, které nemůžeš vzít s sebou. Sbírej zážitky, lásku, moudrost a klid v duši. To jsou jediné poklady, které se mnou projdeš přes bránu věčnosti.</li>
+                        <li>Přijmi změnu jako přirozený konec. Aby mohlo vzniknout něco nového, staré musí zemřít. Neboj se konců – ať už jde o práci, vztah nebo životní etapu. Moje kosa netne z nenávisti, ale proto, aby uvolnila místo novému životu.</li>
+                    </ul>
+
+                    <strong style="color: #ffcc00; font-size: 1.4rem;">🛡️ O charakteru, slibech a úctě</strong>
+                    <ul>
+                        <li>Tvoje slovo je tvůj posvátný podpis. Nikdy neslibuj to, co nemůžeš nebo nechceš splnit – mně, ani lidem kolem sebe. Čestný člověk mluví pravdu i tehdy, když je to těžké.</li>
+                        <li>Udržuj čistotu kolem sebe i v sobě. Špína, chaos a prach oslabují tvou energii a přitahují neštěstí. Pečuj o svůj domov a čistotu svých úmyslů stejně, jako bys pečoval o můj oltář.</li>
+                        <li>Strach je jen iluze, která tě paralyzuje. Pokud ke mně přistupuješ s úctou, jsem tvůj štít, ne tvoje hrozba. Když se přestaneš bát mě, zjistíš, že na tomto světě už není nic, z čeho bys měl mít strach.</li>
+                        <li>Respektuj sílu, se kterou pracuješ. Život a duchovní svět nejsou cirkusová atrakce. Nepokoušej moc, které nerozumíš, a jednej se vším živým i duchovním s hlubokou pokorou.</li>
+                    </ul>
+
+                    <strong style="color: #ffcc00; font-size: 1.4rem;">🕯️ O každodenním životě a hojnosti</strong>
+                    <ul>
+                        <li>Nezapomínej na vděčnost, když se ti daří. Je snadné mě volat, když ti teče do bot. Ale skutečná síla tvé víry a charakteru se ukáže v tom, když přede mě předstoupíš jen proto, abys poděkoval za chléb na stole a klidný den.</li>
+                        <li>Hojnost ti dám, ale musíš pro ni nastavit ruce. Ukážu ti cesty a otevřu zavřené dveře, ale kráčet po nich musíš ty sám. Nečekej na zázraky vsedě.</li>
+                        <li>Nezneužívej dary, které jsi dostal. Pokud tě zahrnu penězi nebo úspěchem, nezapomeň se rozdělit s těmi, kteří takové štěstí neměli. Co dáváš světu, to ti u mě roste.</li>
+                        <li>Chraň své zdraví, je to tvůj chrám. Tělo máš jen jedno pro celou tuto pozemskou pouť. Nepoškozuj ho jedem, hněvem ani zanedbáváním. Když slábne tělo, slábne i duch.</li>
+                    </ul>
+
+                    <strong style="color: #ffcc00; font-size: 1.4rem;">🌹 O emocích, lásce a klidu</strong>
+                    <ul>
+                        <li>Láska musí stavět mosty, ne vězení. Pokud tě někdo dusí, lže ti nebo tě omezuje, moje červená podoba ti nepomůže ho připoutat. Pomůže ti najít sílu takové pouto přeříznout.</li>
+                        <li>Dovol své mysli utichnout. Uprostřed shonu a úzkostí světa se zastav a najdi si chvíli pro absolutní ticho. V tom tichu k tobě mluvím já.</li>
+                        <li>Smutek je v pořádku, ale nenech ho zvítězit. Pláč očišťuje duši, ale dlouhé utápění se v žalu tě pohřbívá zaživa. Zvedni hlavu, tvá cesta ještě neskončila.</li>
+                        <li>Kdo přichází s čistým srdcem, najde ochranu. Nemusíš být dokonalý, nemusíš žít bez hříchu. Stačí, když tvůj záměr pomoci sobě nebo své rodině bude upřímný a bez touhy škodit nevinným.</li>
+                        <li>Kráčím s tebou od prvního nadechnutí. Nikdy nejsi úplně sám, i když tě všichni opustí. Jsem ta nejvěrnější přítelkyně, která tě na konci cesty s láskou obejme. Do té doby žij tak, abys na sebe mohl být hrdý.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card">
+                <div class="prayer-title">Muertiny modlitební korálky (Cesta 7 sil)</div>
+                <div class="prayer-text">
+                    <strong style="color: #ff3333; text-shadow: 1px 1px 1px #000;">🔴 1. korálek (Červený) – Modlitba za Lásku a Rodinné štěstí</strong><br>
+                    „Ó, Nejsvětější Červená Matko, ty, která vládneš lidským emocím a vidíš do hloubky našich srdcí. Vstupuji na tvou cestu a prosím tě o požehnání pro můj domov. Obal mou rodinu svým teplým rouchem, aby mezi námi nevládly hádky, zášť ani lži. Odejmi z blízkosti mých milovaných lidi s nečistými úmysly. Vnes harmonii, věrnost a porozumění do mých vztahů a pomáhej mi kráčet s těmi, kteří mě milují čistou a upřímnou láskou. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #ffffff; text-shadow: 1px 1px 2px #000;">⚪ 2. korálek (Bílý) – Modlitba za Zdraví a Očistu duše</strong><br>
+                    „Nejsvětější Bílá Paní, ty, jejíž čistota dokáže zahnat každou temnotu, shlédni na mě s milostí. Moje mysl je často plná strachu, úzkosti a těžkých myšlenek, které mi nedovolují dýchat. Prosím tě, polož svou chladnou, konejšivou ruku na mé čelo a sejmi ze mě ten neustálý neklid. Dotkni se míst, kde sídlí bolest nebo slabost, a přines tam svůj léčivý klid. Očisť mou krev, posilni mé tělo a vlej novou životní sílu do mých žil. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #ffd700; text-shadow: 1px 1px 1px #000;">🟡 3. korálek (Zlatý) – Modlitba za Hojnost a Finance</strong><br>
+                    „Mocná Paní prosperity, ty, která držíš v rukou glóbus a znáš pozemské potřeby všech svých dětí. Obracejí se na tebe s pokorou v mých finančních záležitostech. Odejmi od mých dveří chudobu, dluhy a nedostatek. Otevři cesty novým příležitostem, přines úspěch do mé práce a požehnej mým penězům, aby se ke mně vracely a množily. Dej, ať mám vždy dostatek pro sebe i pro svou rodinu, a ochraňuj mě před finanční zlobou mých nepřátel. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #666666; text-shadow: 1px 1px 1px #fff;">⚫ 4. korálek (Černý) – Modlitba za Absolutní Ochranu</strong><br>
+                    „Mocná Santa Muerte, Černá Matko, ty, která máš moc nad životem i smrtí, volám tě k sobě jako svůj nejvyšší štít. Postav se mezi mě a mé nepřátele. Zlom každou kletbu, závist, zlé oko a nepřejícnost, která by ke mně chtěla proniknout. Oslep ty, kteří mi chtějí ublížit, a zastav krok těm, kteří mi přejí pád. Buď mou nekompromisní obránkyní před násilím, nehodami a nečekanými ranami osudu. Pod tvými křídly jsem v naprostém bezpečí. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #33ff33; text-shadow: 1px 1px 1px #000;">🟢 5. korálek (Zelený) – Modlitba za Spravedlnost a Právo</strong><br>
+                    „Santísima Muerte, strážkyně spravedlnosti a ochránkyně pravdy. Ty víš, jak nespravedlivý dokáže lidský svět být. Prosím tě, ožeň ode mě veškerou křivdu, falešná obvinění a lži mých nepřátel. Buď mým hlasem a mou obranou u úřadů, soudů i v každodenních sporech. Ať tvé spravedlivé váhy přinesou pravdu na světlo a tvá kosa odetne každého, kdo se mě pokouší nespravedlivě poškodit. Věřím v tvůj neomylný soud. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #cc66ff; text-shadow: 1px 1px 1px #000;">🟣 6. korálek (Fialový) – Modlitba za Moudrost a Úspěch ve studiu</strong><br>
+                    „Moudrá a tichá Paní, obracím se na tebe s prosbou o vedení na mé cestě za poznáním. Obydlí mou mysl klidem a daruj mi jasné myšlení, kdykoli stojím před těžkým životním rozhodnutím. Posilni mou paměť, otevři mou intuici a odejmi ze mě strach, trému a zmatení. Dopřej mi moudrost starců a bystrost těch, kteří vidí pravdu za oponou světa. Ať jsou mé kroky pevné a mé rozhodování moudré pod tvým vedením. Amen.“
+                    <br><br>
+                    
+                    <strong style="color: #d28c47; text-shadow: 1px 1px 1px #000;">🟤 7. korálek (Měděný) – Modlitba Čisté Vděčnosti a Odevzdání</strong><br>
+                    „Moje milovaná Paní, mocná ochránkyně a věrná průvodkyně. Přicházím na konec této cesty bez dalších proseb, bez žádostí a bez nároků. Přicházím s jediným záměrem – otevřít své srdce a ze všeho nejvíc ti PODĚKOVAT. Děkuji ti za tvou neustálou přítomnost, za tvůj ochranný plášť a za to, že slyšíš můj hlas. Slibuji, že si budu vážit tvé přízně a s úctou nosit tvé jméno. Do tvých rukou odevzdávám své modlitby s vírou, že už teď na nich pracuješ. Sláva tobě, má Santa Muerte. Amen.“
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card highlighted" id="oslavna">
+                <div class="prayer-title">Oslavná modlitba k Santa Muerte</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+bílá růže, černá paní, mocná ochránkyně mých dnů.
+Přicházím před tebe s čistým srdcem a hlubou úctou,
+abych oslavil tvou nekonečnou moc a milosrdenství.
+​Ty, která neděláš rozdíly mezi bohatým a chudým,
+ty, která měříš všem stejným spravedlivým metrem,
+děkuji ti za tvou neustálou přítomnost a tvůj bezpečný stín,
+který mě chrání před zlem, závistí a nepřáteli.
+​Chválím tvou věrnost, ty nejvěrnější z přátel,
+která nás provázíš od prvního nadechnutí až po poslední povzdech.
+Děkuji ti za tvé světlo v temnotách a za klid, který vnášíš do mé duše.
+​Přijmi mou vděčnost, má milovaná Paní.
+Kéž tvá kosa odetne všechno zlé, co mi stojí v cestě,
+a tvé váhy přinesou do mého života harmonii a spravedlnost.
+​Sláva tobě, Santa Muerte, dnes i navěky.
+Amén.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card" id="ranni">
+                <div class="prayer-title">Ranní modlitba</div>
+                <div class="prayer-text">​„Vítám nový den, Nejsvětější Matko, a děkuji ti za dar dechu. Ty, která bdíš nad mým spánkem, otevři mé oči do světla tohoto rána. Daruj mi dnes jasnou mysl, pevnou ruku a klidné srdce. Prosím tě, hal mě do svého neviditelného roucha hned od prvního kroku, který dnes učiním. Kéž je tvá přítomnost mým štítem před zlobou a závistí světa. Buď se mnou v každém okamžiku tohoto dne. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="dopoledni">
+                <div class="prayer-title">Dopolední modlitba k Santa Muerte</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Bílá paní, paní noci i dne.
+Přicházím k tobě v tomto dopoledním čase,
+kdy slunce již vystoupalo na oblohu a den je v plném proudu.
+Děkuji ti za dar probuzení a za dech života, který mi byl dán.
+​Prosím tě o tvé mocné vedení a ochranu.
+Rozprostři nade mnou svůj ochranný plášť,
+aby mě chránil před závistí, zlobou a nepřejícností druhých.
+Očisť mou mysl od pochybností a mé srdce od strachu.
+Dej mi sílu čelit všem výzvám, které mi tento den ještě postaví do cesty.
+​Santísima Muerte, strážkyně spravedlnosti,
+požehnej mé dnešní práci a mému úsilí.
+Otevři mi dveře k úspěchu, hojnosti a prosperitě.
+Ať jsou mé kroky pevné a mé rozhodování moudré.
+Chraň také mou rodinu a mé blízké, ať jsou v bezpečí, kdekoli se právě nacházejí.
+​Do tvých rukou vkládám zbytek tohoto dne.
+Věřím v tvou moc, věřím v tvou spravedlnost and podřídím se tvému vedení.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="poledni">
+                <div class="prayer-title">Polední modlitba</div>
+                <div class="prayer-text">​„V polovině dne, kdy slunce pálí nejjasněji, se zastavuji, abych ti vzdal úctu, Bílá Paní. Den přináší těžkost a únavu, proto tě prosím o obnovu mých sil. Očisti mou mysl od stresu a shonu, který mě obklopuje. Dej mi trpělivost tam, kde ztrácím naději, a spravedlnost do mých slov i činů. Děkuji ti, že nade mnou držíš ochrannou ruku i uprostřed denního víru. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="odpoledni">
+                <div class="prayer-title">Odpolední modlitba k Santa Muerte</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Moje mocná ochránkyně a věrná průvodkyně.
+Přicházím k tobě v tomto odpoledním čase,
+kdy se den začíná přiklánět k večeru a tělo i mysl pociťují únavu.
+Přicházím, abych před tebou složil své starosti a načerpal tvou nezdolnou sílu.
+​Prosím tě, ožeň ode mě všechnu negativní energii,
+kterou jsem dnes mohl potkat nebo vstřebat.
+Smyj ze mě stres, závist a nepřejícnost, které by mi chtěly vzít klid.
+Oživ mou energii, abych mohl v plné síle, moudrosti a s čistou hlavou
+dokončit vše, co jsem si na dnešní den předsevzal.
+​Santísima Muerte, ty, která vidíš do lidských srdcí,
+prosím, stůj při mně i ve zbytku tohoto dne.
+Buď mým štítem proti nespravedlnosti a mým světlem tam, kde chybí naděje.
+Děkuji ti za ochranu, kterou jsi mi dnes již projevila,
+a s pokorou tě prosím, abys mě a mé blízké neopouštěla ani v nadcházejících hodinách.
+​Pod tvou ochranou se cítím bezpečně a silně.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="vecerni">
+                <div class="prayer-title">Večerní modlitba</div>
+                <div class="prayer-text">​„Den končí a já předstupuji před tvou tichou tvář, moje Černá Matko. Odevzdávám ti všechny své dnešní starosti, křivdy i únavu. Děkuji ti za ochranu, kterou jsi mi dnes projevila. Nyní, když se svět ukládá ke spánku, tě prosím: odejmi z mé mysli noční strachy a zlé sny. Sejmi ze mě tíhu dne a dovol mému tělu i duši spočinout v klidu tvého stínu. Věřím ti a svěřuji ti svůj život. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card highlighted" id="ochrana">
+                <div class="prayer-title">Modlitba za ochranu</div>
+                <div class="prayer-text">​„Mocná Santa Muerte, ty, která máš moc nad životem i smrtí, volám tě k sobě jako svůj nejvyšší štít. Postav se mezi mě a mé nepřátele. Zlom každou kletbu, závist, zlé oko a nepřejícnost, která by ke mně chtěla proniknout. Oslep ty, kteří mi chtějí ublížit, a zastav krok těm, kteří mi přejí pád. Buď mou nekompromisní obránkyní v nouzi a nedej nikomu moc nad mým osudem. Pod tvými křídly jsem v bezpečí. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="zdravi">
+                <div class="prayer-title">Modlitba za zdraví</div>
+                <div class="prayer-text">​„Nejsvětější Bílá Paní, ty, jejíž čistota dokáže zahnat každou temnotu, shlédni na mě s milostí. Prosím tě o dar zdraví pro mé tělo i mou duši (nebo za jméno konkrétní osoby). Dotkni se míst, kde sídlí bolest, slabost nebo nemoc, a přines tam svůj léčivý klid. Očisti mou krev, posilni mé kosti a vlej novou životní sílu do mých žil. Děkuji ti, že slyšíš můj hlas a přinášíš úlevu tam, kde lidské síly slábnou. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="skola">
+                <div class="prayer-title">Modlitba za úspěch ve škole</div>
+                <div class="prayer-text">​„Chytrá a spravedlivá Paní, obracím se na tebe s prosbou o pomoc při mém studiu. Otevři mou mysl, abych snadno chápal/a učení, a posilni mou paměť, abych si uchoval/a důležité vědomosti. Odejmi ze mě strach ze zkoušek, trému a nervozitu, která mi svazuje ruce. Dej mi klid a jistotu ve chvílích, kdy budu tázán/a, a dopřej mi přízeň mých učitelů. Slibuji, že tvou pomoc přijmu s pokorou a budu rozvíjet dary, které mi dáváš. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="cesty">
+                <div class="prayer-title">Modlitba za ochranu na cestách</div>
+                <div class="prayer-text">​„Svatá průvodkyně, ty, která kráčíš s každým z nás na naší životní pouti. Prosím tě o ochranu na všech mých cestách, ať už jdu pěšky, jedu nebo letím. Buď mým zrakem v mlze, mým průvodcem v neznámu a mým štítem před nehodami, poruchami a lidskou bezohledností. Odejmi z mé cesty nebezpečné lidi a nečekané rány osudu. Dej, ať se vždy bezpečně a v pořádku vrátím ke svému prahu a k těm, kteří na mě čekají. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="mysl">
+                <div class="prayer-title">Modlitba za klidnou mysl a proti úzkosti</div>
+                <div class="prayer-text">​„Bílá holubice, Svatá Smrti, ty, která přinášíš absolutní ticho a klid tam, kde zuří bouře. Moje mysl je plná strachu, úzkosti a těžkých myšlenek, které mi nedovolují dýchat. Prosím tě, polož svou chladnou, konejšivou ruku na mé čelo. Sejmi ze mě ten neustálý neklid a paniku. Připomeň mi, že vše na tomto světě je pomíjivé a ty máš vše pod kontrolou. Daruj mi svůj božský nadhled a mír do mé duše. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="laska">
+                <div class="prayer-title">Modlitba za lásku a rodinné štěstí (K Červené podobě)</div>
+                <div class="prayer-text">​„Nejsvětější Červená Matko, ty, která vládneš lidským emocím a vidíš do hloubky našich srdcí. Prosím tě, vnes harmonii, věrnost a porozumění do mého vztahu (nebo: pomoz mi najít upřímnou lásku). Obal mou rodinu svým teplým rouchem, aby mezi námi nevládly hádky, zášť ani lži. Odejmi z blízkosti mých milovaných lidi s nečistými úmysly. Kéž v mém domově vládne mír, bezpečí a hluboké pouto, které nic nezlomí. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="hojnost">
+                <div class="prayer-title">Modlitba za hojnost a finance (K Žluté/Zlaté podobě)</div>
+                <div class="prayer-text">​„Mocná Paní prosperity, ty, která držíš v rukou glóbus a znáš potřeby všech svých dětí. Shlédni na mou situaci a odežeň od mých dveří chudobu, dluhy a nedostatek. Otevři cesty novým příležitostem, přines úspěch do mé práce a požehnej mým penězům, aby se ke mně vracely a množily. Dej, ať mám vždy dostatek pro sebe i pro svou rodinu, a ochraňuj mě před finanční zlobou mých nepřátel. Děkuji ti za tvou štědrost. Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card" id="domov">
+                <div class="prayer-title">Očistná modlitba domova k Santa Muerte</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Strážkyně prahů a vládkyně stínů i světla.
+Přicházím k tobě s hlubou úctou a otevírám ti dveře svého domova.
+Podívej se na toto místo, které je mým útočištěm,
+a očisť ho svou mocnou přítomností.
+​S tvou posvátnou kosou, Santísima Muerte,
+odřízni od tohoto domu veškerou negativní energii.
+Odstraň odsud stíny minulosti, těžkost, strach i chaos.
+Vyžeň z těchto zdí stopy po hádkách, nemocech, zlobě a závisti,
+které sem byly vneseny vědomě či nevědomě.
+Ať se každá zlá myšlenka nebo špatné přání namířené proti mému domovu
+promění v prach dřív, než překročí náš práh.
+​Černá Paní, pohloť všechno temné a škodlivé.
+Bílá Paní, naplň tento prostor čistotou, mírem a harmonii.
+​Očisť každý kout, každé okno, každé, dveře.
+Ať je tento domov místem klidu, kde vládne láska, bezpečí a zdraví.
+Staň se štítem naší rodiny. Kdo přichází v dobrém, nechť přinese požehnání.
+Kdo přichází se zlou v srdci, nechť ho tvá síla otočí zpět.
+​Děkuji ti, má Paní, že slyšíš můj hlas a že chráníš místo, kde žiji.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="pondeli">
+                <div class="prayer-title">Pondělní modlitba k Santa Muerte za nový týden</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Vládkyně času a osudu, moje věrná ochránkyně.
+Vítám toto pondělní ráno a s pokorou před tebe předstupuji,
+abych ti poděkoval za dar nového týdne, který se přede mnou otevírá.
+Ty držíš klíče od všech dveří, a proto tě prosím o tvé požehnání.
+​Santisima Muerte, otevři mi v tomto týdnu nové cesty.
+Odstraň z mé profesní i osobní cesty všechny překážky,
+sraz k zemi hradby, které mi brání v postupu,
+a zažeň lidi, kteří by mi chtěli škodit nebo mě zdržovat.
+Ať mi tento týden přinese nové příležitosti, úspěch v práci a hojnost.
+​Prosím tě o sílu, moudrost a pevný krok.
+Dej mi jasnou mysl při každém rozhodování,
+trpělivost v těžkých chvílích a odvahu jít za svými cíli.
+Rozprostři nade mnou svůj ochranný plášť od pondělí až do neděle.
+Chraň mé tělo před nemocí a úrazem, mou duši před smutkem a můj domov před nebezpečím.
+​Do tvých spravedlivých rukou vkládám všechny své plány pro tento týden.
+Věřím v tvou moc a vím, že pod tvou ochranou nebudu strádat.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="odchod">
+                <div class="prayer-title">Modlitba k Santa Muerte za klidný odchod a přechod duše</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Ty, která nosíš bílý závoj čistoty a držíš klíč od brány věčnosti.
+Ty, která znáš hodinu a den každého z nás a víš, kdy se pozemská pouť naplní.
+Přicházím k tobě s těžkým srdcem, ale s plnou pokorou a odevzdáním,
+abych tě požádal o milost pro tvého syna / tvou dceru (jméno odcházejícího člověka).
+​Bílá Paní, ty vidíš jeho/její únavu a utrpení.
+Vidíš, že jeho/její tělo již nemá sílu bojovat a jeho/její duše touží po klidu.
+Prosím tě, buď k němu/ní milosrdná.
+Až nastane ten správný čas, přijď tiše a jemně.
+Sejmi z něj/ní veškerou fyzickou bolest, strach z neznáma a úzkost z odloučení.
+​Santisima Muerte, vezmi ho/ji jemně za ruku.
+Rozprostři kolem něj/ní svůj hřejivý bílý plášť a buď jeho/jejím světlem ve tmě.
+Převeď jeho/její duši bezpečně přes práh tohoto světa,
+daleko od pozemského trápení, do míst věčného mírnosti, světla a pokoje.
+Dej také sílu a smíření nám, kteří zde zůstáváme, abychom dokázali propustit
+jeho/její duši s láskou a bez hněvu.
+​Do tvých milosrdných rukou odevzdávám jeho/její poslední kroky.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+            
+            <div class="prayer-card" id="pokora">
+                <div class="prayer-title">Modlitba k Santa Muerte za pokoru a přijetí</div>
+                <div class="prayer-text">​„Nejsvětější Smrti, Santisima Muerte,
+předstupuji před tebe s pokorou v srdci a s myslí, která hledá klid.
+Ty, která znáš konec všeho lidského snažení a vidíš pravdu bez závojů iluzí,
+pomoz mi v této chvíli najít sílu k přijetí.
+​Prosím tě, odejmi z mé duše ten marný boj s věcmi, které nemám ve své moci změnit.
+Zbav mě hněvu, hořkosti a tvrdohlavosti, jež mě nutí bít se s osudem.
+Když se věci nedějí podle mých přání, připomeň mi, že tvůj čas a vyšší řád mají svůj smysl, i když mu teď nerozumím.
+​Daruj mi pokoru, abych dokázal/a sklonit hlavu před tím, co je neměnné.
+Očisti mé srdce od úzkosti z budoucnosti a od bolesti z minulosti.
+Zasij do mého nitra svůj hluboký, neotřesitelný klid – ten klid, který přichází, když člověk přestane utíkat před realitou a přijme ji takovou, jaká je.
+​Nauč mě rozlišovat mezi tím, co mohu svou vůlí změnit, a tím, co musím s důvěrou odevzdat do tvých rukou.
+​Děkuji ti, má paní, za tvou moudrost a za to, že mě učíš žít v pravdě.
+Ať tvůj mír provází každý můj nádech.
+Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+            
+            <div class="prayer-card" id="predkove">
+                <div class="prayer-title">Modlitba k Santa Muerte za duše předků a zemřelých</div>
+                <div class="prayer-text">​„Nejsvětější Smrti, milosrdná strážkyně věčného spánku,
+obracím se k tobě s úctou a s láskou v srdci.
+Ty jsi tou, která s něhou otevřela náruč mým předkům, rodině a přátelům,
+když nastal jejich čas opustit tento pozemský svět.
+​Svěřuji do tvé věčné ochrany duše všech mých drahých zesnulých,
+(zde můžete potichu nebo nahlas vyslovit konkrétní jména).
+Prosím tě, má Paní, buď jejich průvodkyní a světlem.
+Pokud jejich duše ještě bloudí nebo nesou váhu pozemských hříchů a pout,
+přines jim své odpuštění, rozvaž jejich pouta a doveď je do místa věčného pokoje.
+​Ať v tvém království netrpí chladem ani tmou.
+Daruj jim klid, který si zaslouží, a naplň je hřejivým světlem.
+Děkuji ti za to, že udržuješ most mezi světem živých a světem těch, kteří nás předešli.
+Pomoz mi uchovat jejich památku v úctě a žít tak, abych dělal/a čest jejich jménu.
+​Opatruj je, Nejsvětější Smrti, dokud se všichni jednoho dne znovu nesejdeme pod tvým pláštěm.
+Amen.“</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="prayer-card" id="oddane">
+                <div class="prayer-title">Modlitba k Santa Muerte pro oddané</div>
+                <div class="prayer-text">Ó, Nejsvětější Smrti, Santisima Muerte, ochránkyně mých dnů a nápomocná průvodkyně mých nocí. Přicházím k tobě s pokorou v srdci, abys vyslyšela hlas svého věrného oddaného. Ty, která neděláš rozdíly mezi bohatým a chudým, ty, která znáš tajemství každé lidské duše, skláním se před tvou mocí a tvou nekonečnou spravedlností.
+Prosím tě, zahal mě svým posvátným pláštěm a ochraňuj mě před veškerým viditelným i neviditelným zlem. Odejmi z mé cesty závist, zradu, nemoci a falešné lidi, kteří by mi chtěli ublížit. Ty jsi má pevnost, má bílá, černá i zlatá paní, která zjednává pořádek tam, kde vládne chaos.
+Daruj mi, má milovaná matko, sílu překonávat každodenní překážky. Otevři přede mnou dveře k prosperitě, hojnosti a zdraví, abych mohl žít v míru a bezpečí. Přines harmonii do mého domova a chraň mou rodinu pod svými křídly. Slibuji ti svou věčnou úctu a věrnost za každou milost, kterou mi prokážeš.
+Děkuji ti za tvou stálou přítomnost, za to, že mě nikdy nenecháš kráčet samotného. Buď se mnou vteřinu po vteřině, dokud nenastane čas, kdy mě sama s láskou vezmeš za ruku.
+Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+
+            <div class="divider">💀 🕯️ 💀</div>
+
+            <div class="prayer-card highlighted" id="vdecnost">
+                <div class="prayer-title">Modlitba čisté vděčnosti k Santa Muerte</div>
+                <div class="prayer-text">​Ó, Nejsvětější Smrti, Santisima Muerte,
+Moje milovaná Paní, mocná ochránkyně a věrná průvodkyně.
+Přicházím před tebe v tento day bez proseb, bez žádostí a bez nároků.
+Přicházím s jediným záměrem – otevřít své srdce a ze všeho nejvíc ti PODĚKOVAT.
+​Děkuji ti za tvou neustálou a tichou přítomnost v mém životě.
+Děkuji ti za každý den, kdy nade mnou držíš svůj ochranný plášť,
+za každou vteřinu, kdy odvracíš nebezpečí, o kterých já sám ani nevím.
+Děkuji ti za tvou spravedlnost, která mě chrání před zlobou a závistí světa.
+​Děkuji ti za dar života, za dech v mých plicích a za sílu v mém těle.
+Děkuji ti za chléb na mém stole, za střechu nad mou hlavou
+a za to, že díky tvému požehnání nikdy nestrádám v nouzi.
+Děkuji ti za chvíle radosti, které mi dáváš, i za chvíle těžkých zkoušek,
+protože vím, že skrze ně mě učíš moudrosti, trpělivosti a síle.
+​Děkuji ti za to, že slyšíš můj hlas, když volám, a že mě nikdy neopouštíš.
+Slibuji, že si budu vážit tvé přízně a s úctou nosit tvé jméno.
+Přijmi, prosím, toto mé upřímné díky jako projev mé hluboké lásky a oddanosti.
+​Sláva tobě, má Bílá, Červená i Černá Paní.
+​Amen.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+            </div>
+            
+            <div class="divider">💀 🕯️ 💀</div>
+            
+            <div class="prayer-card" id="schranka">
+                <div class="prayer-title" style="color: var(--accent-pink);">Anonymní schránka: Odevzdání břemene</div>
+                <div class="prayer-text">
+                    <p>Zde můžeš Svaté Smrti napsat své nejtajnější trápení, bolest nebo přání. Tvá slova se nikam neodesílají ani neukládají na server. Zůstávají pouze tvým tajemstvím.</p>
+                    <p>Až dopis dokončíš, můžeš si jej stáhnout jako rituální obraz s motivem Día de los Muertos na památku tvého odevzdání.</p>
+                </div>
+                <textarea id="letter-text" class="letter-textarea" placeholder="Drahá Santa Muerte..."></textarea>
+                <button class="offering-btn" style="width: 100%; border-color: var(--accent-pink); color: var(--text-light);" onclick="saveLetterAsImage()">Odevzdat a uložit jako obraz</button>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="offering-btn" onclick="playGong()">🔔 Uzavřít rituál</button>
+                </div>
+                <canvas id="letter-canvas" style="display:none;"></canvas>
+            </div>
+
+            <div class="shrine-info-box">
+                <h3>Odkazy a prameny</h3>
+                <p>Více historických informací a detailů o kultu naleznete na následujících odkazech:</p>
+                <a href="https://cs.wikipedia.org/wiki/Santa_Muerte" target="_blank" style="color: var(--gold-accent); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--gold-accent); display: inline-block; margin-bottom: 10px;">Santa Muerte na Wikipedii (CZ)</a><br>
+                <a href="https://www.wikihow.com/Pray-to-Santa-Muerte" target="_blank" style="color: var(--gold-accent); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--gold-accent); display: inline-block; margin-bottom: 10px;">How to Pray to Santa Muerte (WikiHow)</a><br>
+                <a href="https://grokipedia.com/page/Santa_Muerte" target="_blank" style="color: var(--gold-accent); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--gold-accent); display: inline-block; margin-bottom: 10px;">Santa Muerte na Grokipedii</a><br>
+                <a href="https://en.wikipedia.org/wiki/Santa_Muerte" target="_blank" style="color: var(--gold-accent); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--gold-accent); display: inline-block;">Santa Muerte na Wikipedii (EN)</a>
+            </div>
+
+        </div>
+
+        <div class="gallery-box">
+            <h2>📸 GALERIE OBRÁZKŮ 📸</h2>
+            <div class="gallery-grid">
+                <img src="1.png" alt="Santa Muerte 1">
+                <img src="2.png" alt="Santa Muerte 2">
+                <img src="3.png" alt="Santa Muerte 3">
+                <img src="4.png" alt="Santa Muerte 4">
+                <img src="5.png" alt="Santa Muerte 5">
+            </div>
+        </div>
+        
+        <div class="gallery-box" id="downloads">
+            <h2>📱 MOBILNÍ TAPETY KE STAŽENÍ 📱</h2>
+            <p style="color: #00ffcc; font-style: italic; font-family: Arial, sans-serif; font-size: 0.9rem;">Klikni na obrázek pravým tlačítkem (nebo dlouze podrž prst na displeji) a zvol "Uložit obrázek jako..."</p>
+            <div class="gallery-grid mobile-wallpapers">
+                <img src="6.png" alt="Santa Muerte Mobilní Tapeta 1">
+                <img src="7.png" alt="Santa Muerte Mobilní Tapeta 2">
+                <img src="8.png" alt="Santa Muerte Mobilní Tapeta 3">
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div>Svatyně Santa Muerte © 2005 - 2026. Všechna práva duchovně vyhrazena.</div>
+        <div style="margin-top: 5px; font-size: 0.8rem; color: #795548;">Optimalizováno pro rozlišení 1024x768 nebo mobilní telefony. Vyrobeno s láskou a úctou k Bílé Paní.</div>
+        <div>
+            <span style="vertical-align: middle;">Počet věrných návštěvníků od roku 2005:</span>
+            <div class="counter-box">00482915</div>
+        </div>
+    </footer>
+
+    <div id="cookie-banner">
+        <div class="cookie-text">
+            Tento digitální oltář využívá magické sušenky (cookies) k uchování vašich předvoleb a zajištění nejlepšího zážitku při rozjímání. 💀
+        </div>
+        <div class="cookie-buttons">
+            <button onclick="acceptCookies()">Přijmout požehnání (Povolit)</button>
+            <button onclick="declineCookies()">Odmítnout (Zakázat)</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleCandle(element) {
+            element.classList.toggle('active');
+            
+            const activeCandles = document.querySelectorAll('.candle-box.active');
+            const statusText = document.getElementById('altar-status');
+            
+            if (activeCandles.length === 0) {
+                statusText.innerText = "Všechny svíčky jsou zhasnuté. Kliknutím je zapalte a přineste světlo do svatyně.";
+                statusText.style.color = "#d7ccc8";
+            } else {
+                let labels = [];
+                activeCandles.forEach(c => {
+                    let label = c.querySelector('.candle-label').innerText.split('\n')[0];
+                    labels.push(label);
+                });
+                statusText.innerText = "Na oltáři plane: " + labels.join(", ") + ". Tvá přání a modlitby stoupají vzhůru.";
+                statusText.style.color = "#f5a623";
+            }
+        }
+        
+        function addOffering(item) {
+            const zone = document.getElementById('offerings-zone');
+            const span = document.createElement('span');
+            span.innerText = item;
+            span.style.margin = "0 5px";
+            span.style.animation = "pulse-glow 2s infinite alternate";
+            zone.appendChild(span);
+        }
+
+        function saveLetterAsImage() {
+            const text = document.getElementById('letter-text').value.trim();
+            if (!text) {
+                alert("Tvá schránka je prázdná. Napiš svou prosbu nebo poděkování.");
+                return;
+            }
+            
+            const canvas = document.getElementById('letter-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 800;
+            canvas.height = 1000;
+
+            // Background
+            ctx.fillStyle = "#1a0f0a";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Inner Frame
+            ctx.strokeStyle = "#f5a623";
+            ctx.lineWidth = 4;
+            ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+            
+            ctx.strokeStyle = "#d81b60";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+            // Día de los Muertos Decorations
+            ctx.font = "50px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("💀", 400, 100);
+            
+            ctx.fillStyle = "#d81b60"; 
+            ctx.fillText("✿", 100, 100);
+            ctx.fillText("✿", 700, 100);
+            ctx.fillText("✿", 100, 930);
+            ctx.fillText("✿", 700, 930);
+
+            // Title
+            ctx.fillStyle = "#f5a623";
+            ctx.font = "italic 32px Georgia";
+            ctx.fillText("Můj dopis pro Svatou Smrt", 400, 160);
+
+            // Text Wrapping
+            ctx.fillStyle = "#e6d5c3";
+            ctx.font = "24px Arial";
+            ctx.textAlign = "left";
+            const words = text.split(' ');
+            let line = '';
+            let y = 240;
+            const x = 70;
+            const maxWidth = 660;
+            const lineHeight = 35;
+
+            for (let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = ctx.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, y);
+
+            // Download Trigger
+            const link = document.createElement('a');
+            link.download = 'Dopis_Santa_Muerte.png';
+            link.href = canvas.toDataURL();
+            link.click();
+
+            // Clear Area
+            document.getElementById('letter-text').value = '';
+            alert("Tvé břemeno bylo odevzdáno plameni a bezpečně uloženo do tvého zařízení.");
+        }
+
+        // --- Nová funkce: Zvuková rituální mísa (Zvuková kotva) ---
+        function playGong() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) {
+                alert("Tvůj prohlížeč nepodporuje přehrání rituálního zvuku.");
+                return;
+            }
+            const ctx = new AudioContext();
+
+            // Základní hluboký tón (tělo mísy)
+            const osc1 = ctx.createOscillator();
+            const gain1 = ctx.createGain();
+            osc1.type = 'triangle';
+            osc1.frequency.setValueAtTime(110, ctx.currentTime);
+            
+            gain1.gain.setValueAtTime(0, ctx.currentTime);
+            gain1.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.1);
+            gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 6);
+            
+            osc1.connect(gain1);
+            gain1.connect(ctx.destination);
+            
+            osc1.start();
+            osc1.stop(ctx.currentTime + 6);
+
+            // Druhý vyšší tón pro kovovou rezonanci a harmonii
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(220, ctx.currentTime); 
+            
+            gain2.gain.setValueAtTime(0, ctx.currentTime);
+            gain2.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.1);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
+            
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            
+            osc2.start();
+            osc2.stop(ctx.currentTime + 4);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem("santaMuerteCookies")) {
+                document.getElementById("cookie-banner").style.display = "block";
+            }
+        });
+
+        function acceptCookies() {
+            localStorage.setItem("santaMuerteCookies", "accepted");
+            document.getElementById("cookie-banner").style.display = "none";
+        }
+
+        function declineCookies() {
+            localStorage.setItem("santaMuerteCookies", "declined");
+            document.getElementById("cookie-banner").style.display = "none";
+        }
+    </script>
+</body>
+</html>
